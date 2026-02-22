@@ -2,21 +2,68 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>サイト内にサイト</title>
+  <title>Wiki と 阿部寛ビューア</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; }
+    #controls {
+      padding: 10px;
+      background: #eee;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    input { flex: 1; padding: 8px; min-width: 200px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    #viewer {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    #viewer.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+    }
+    #linkList {
+      padding: 10px;
+      background: #f7f7f7;
+    }
+    #linkList button {
+      margin: 4px;
+      padding: 6px 10px;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>リンクを押すと下に表示される</h1>
+  <div id="controls">
+    <input id="urlInput" type="text" placeholder="ここにURLを入力">
+    <button onclick="viewer.src = urlInput.value">入力したURLを表示</button>
+    <button onclick="toggleFullscreen()">全画面</button>
+  </div>
 
-  <!-- 表示したいリンク -->
-  <a href="#" onclick="document.getElementById('viewer').src='https://example.com';">
-    example.com を表示
-  </a>
+  <div id="linkList">
+    <h3>開けるサイト一覧</h3>
+    <button onclick="viewer.src='https://ja.wikipedia.org'">
+      Wikipedia（日本語）
+    </button>
+    <button onclick="viewer.src='https://abehiroshi.la.coocan.jp/'">
+      阿部寛のホームページ
+    </button>
+  </div>
 
-  <hr>
+  <iframe id="viewer"></iframe>
 
-  <!-- iframe（ここにサイトが出る） -->
-  <iframe id="viewer" width="100%" height="600"></iframe>
+  <script>
+    function toggleFullscreen() {
+      const v = document.getElementById('viewer');
+      v.classList.toggle('fullscreen');
+    }
+  </script>
 
 </body>
 </html>
